@@ -1,16 +1,12 @@
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
-const res = await fetch('https://nekos.best/api/v2/neko');
 
-async function getNeko(): Promise<string> {
-    const url = (await res.json()).results[0].url as string;
-    return url;
-}
-
-async function getSource(): Promise<string> {
-    const url = (await res.json()).results[0].source_url as string;
-    return url;
+async function getNeko(): Promise<{ image: string, source: string; }> {
+    const res = await fetch('https://nekos.best/api/v2/neko');
+    const data = await res.json();
+    const { url: image, source_url: source } = data.results[0];
+    return { image, source };
 }
 
 export default definePlugin({
@@ -23,8 +19,11 @@ export default definePlugin({
     commands: [{
         name: "neko",
         description: "Send cute neko image.",
-        execute: async opts => ({
-            content: `[${await getSource()}](${await getNeko()})`
-        })
+        execute: async opts => {
+            const { image, source } = await getNeko();
+            return {
+                content: `[${source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}](${image})`
+            };
+        }
     }]
 });
