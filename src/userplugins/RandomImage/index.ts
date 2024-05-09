@@ -25,7 +25,7 @@ function createCommand(name: string, type: string, description: string) {
         async execute(opts: any) {
             const query = findOption(opts, "query", "");
             const url = await getRandomImage(type, query);
-            return { content: `[${type}${query ? ` - ${query} <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>` : ""}](${url.image})` };
+            return { content: `[${type}${query ? ` - ${query} <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>` : " <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>"}](${url.image})` };
         }
     };
 }
@@ -34,7 +34,7 @@ const commands = [
     createCommand("neko", "neko", "Send random cute neko image."),
     createCommand("kitsune", "kitsune", "Send random cute kitsune image."),
     createCommand("waifu", "waifu", "Send random waifu image."),
-    createCommand("husband", "husbando", "Send random husbando image.")
+    createCommand("husbando", "husbando", "Send random husbando image.")
 ];
 
 export default definePlugin({
