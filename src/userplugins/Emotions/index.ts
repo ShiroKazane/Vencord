@@ -45,7 +45,7 @@ export default definePlugin({
             }
         },
         {
-            name: "shrugs",
+            name: "shrug-gif",
             description: "Send random shrug gif.",
             execute: async opts => {
                 return {
@@ -108,7 +108,7 @@ export default definePlugin({
             }
         },
         {
-            name: "blush",
+            name: "blush-gif",
             description: "Send random blush gif.",
             execute: async opts => {
                 return {
@@ -225,7 +225,7 @@ export default definePlugin({
             }
         },
         {
-            name: "kick",
+            name: "kick-gif",
             description: "Send random kick gif.",
             execute: async opts => {
                 return {
