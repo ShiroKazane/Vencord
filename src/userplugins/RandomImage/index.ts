@@ -25,7 +25,7 @@ function createCommand(name: string, type: string, description: string) {
         async execute(opts: any) {
             const query = findOption(opts, "query", "");
             const url = await getRandomImage(type, query);
-            return { content: `[${type}${query ? ` - ${query} <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>` : " <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>"}](${url.image})` };
+            return { content: `[${type}${query ? ` - ${query} <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>` : ` <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>`}](${url.image})` };
         }
     };
 }
