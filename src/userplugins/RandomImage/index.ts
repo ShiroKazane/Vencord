@@ -1,13 +1,41 @@
+import { ApplicationCommandOptionType, findOption } from "@api/Commands";
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
 
-async function getImage(type: string): Promise<{ image: string, source: string; }> {
-    const res = await fetch(`https://nekos.best/api/v2/${type}`);
+async function getRandomImage(type: string, query?: string): Promise<{ image: string, source: string; }> {
+    const url = query ? `https://nekos.best/api/v2/search?query=${encodeURI(query)}&category=${encodeURI(type)}&type=1` : `https://nekos.best/api/v2/${encodeURI(type)}`;
+    const res = await fetch(url);
     const data = await res.json();
-    const { url: image, source_url: source } = data.results[0];
-    return { image, source };
+    if (!data.results || data.results.length === 0) { throw new Error(`No GIF found for ${type} with query \`${query}\`.`); }
+    return { image: data.results[0].url, source: data.results[0].source_url };
 }
+
+function createCommand(name: string, type: string, description: string) {
+    return {
+        name,
+        description,
+        options: [
+            {
+                name: "query",
+                description: "Get a specific gif",
+                type: ApplicationCommandOptionType.STRING
+            },
+        ],
+        async execute(opts: any) {
+            const query = findOption(opts, "query", "");
+            const url = await getRandomImage(type, query);
+            return { content: `[${type}${query ? ` - ${query} <${url.source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}>` : ""}](${url.image})` };
+        }
+    };
+}
+
+const commands = [
+    createCommand("neko", "neko", "Send random cute neko image."),
+    createCommand("kitsune", "kitsune", "Send random cute kitsune image."),
+    createCommand("waifu", "waifu", "Send random waifu image."),
+    createCommand("husband", "husbando", "Send random husbando image.")
+];
 
 export default definePlugin({
     name: "RandomImage",
@@ -16,46 +44,5 @@ export default definePlugin({
     ],
     description: "Add commands to get random image.",
     dependencies: ["CommandsAPI"],
-    commands: [
-        {
-            name: "neko",
-            description: "Send random cute neko image.",
-            execute: async opts => {
-                const { image, source } = await getImage('neko');
-                return {
-                    content: `[${source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}](${image})`
-                };
-            }
-        },
-        {
-            name: "waifu",
-            description: "Send random waifu image.",
-            execute: async opts => {
-                const { image, source } = await getImage('waifu');
-                return {
-                    content: `[${source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}](${image})`
-                };
-            }
-        },
-        {
-            name: "husbando",
-            description: "Send random husbando image.",
-            execute: async opts => {
-                const { image, source } = await getImage('husbando');
-                return {
-                    content: `[${source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}](${image})`
-                };
-            }
-        },
-        {
-            name: "kitsune",
-            description: "Send random cute kitsune image.",
-            execute: async opts => {
-                const { image, source } = await getImage('kitsune');
-                return {
-                    content: `[${source.match(/https:\/\/(?:www\.)?(.*)/)?.[1]}](${image})`
-                };
-            }
-        }
-    ]
+    commands
 });
