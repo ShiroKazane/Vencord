@@ -234,7 +234,7 @@ export default definePlugin({
             }
         },
         {
-            name: "happy",
+            name: "happy-gif",
             description: "Send random happy gif.",
             execute: async opts => {
                 return {
