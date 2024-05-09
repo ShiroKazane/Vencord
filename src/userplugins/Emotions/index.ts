@@ -117,7 +117,7 @@ export default definePlugin({
             }
         },
         {
-            name: "smug",
+            name: "smug-gif",
             description: "Send random smug gif.",
             execute: async opts => {
                 return {
