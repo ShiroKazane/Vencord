@@ -45,7 +45,7 @@ export default definePlugin({
             }
         },
         {
-            name: "shrug",
+            name: "shrugs",
             description: "Send random shrug gif.",
             execute: async opts => {
                 return {
