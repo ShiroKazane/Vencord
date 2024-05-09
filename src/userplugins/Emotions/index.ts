@@ -25,7 +25,7 @@ function createCommand(name: string, type: string, description: string) {
         async execute(opts: any) {
             const query = findOption(opts, "query", "");
             const imageUrl = await getRandomGif(type, query);
-            return { content: `[${name}](${imageUrl})` };
+            return { content: `[${type}](${imageUrl})` };
         }
     };
 }
