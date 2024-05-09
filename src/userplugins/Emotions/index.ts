@@ -270,15 +270,6 @@ export default definePlugin({
             }
         },
         {
-            name: "pat",
-            description: "Send random pat gif.",
-            execute: async opts => {
-                return {
-                    content: `[pat](${await getImage('pat')})`
-                };
-            }
-        },
-        {
             name: "nod",
             description: "Send random nod gif.",
             execute: async opts => {
