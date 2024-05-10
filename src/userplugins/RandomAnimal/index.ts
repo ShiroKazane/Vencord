@@ -2,7 +2,7 @@ import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
 async function getRandomAnimal(type: string): Promise<string> {
-    const url = `http://shibe.online/api/${encodeURI(type)}&httpsUrls=true`;
+    const url = `https://shibe.online/api/${encodeURI(type)}`;
     const res = await fetch(url);
     const data = await res.json();
     if (!data || res.status !== 200) { throw new Error(`No image found for \`${type}\`.`); }
