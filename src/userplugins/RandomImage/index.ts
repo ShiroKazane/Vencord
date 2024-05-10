@@ -4,19 +4,11 @@ import definePlugin from "@utils/types";
 
 
 async function getRandomImage(type: string, query?: string): Promise<{ image: string, source: string; }> {
-    if (type == "shiba") {
-        const url = "https://shibe.online/api/shibes";
-        const res = await fetch(url);
-        const data = await res.json();
-        if (!data || res.status !== 200) { throw new Error(`No image found for ${type}.`); }
-        return { image: data[0], source: "https://shibe.online/api/shibes" };
-    } else {
-        const url = query ? `https://nekos.best/api/v2/search?query=${encodeURI(query)}&category=${encodeURI(type)}&type=1` : `https://nekos.best/api/v2/${encodeURI(type)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (!data.results || data.results.length === 0) { throw new Error(`No image found for ${type}${query ? ` with query \`${query}\`.` : "."}`); }
-        return { image: data.results[0].url, source: data.results[0].source_url };
-    }
+    const url = query ? `https://nekos.best/api/v2/search?query=${encodeURI(query)}&category=${encodeURI(type)}&type=1` : `https://nekos.best/api/v2/${encodeURI(type)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.results || data.results.length === 0) { throw new Error(`No image found for ${type}${query ? ` with query \`${query}\`.` : "."}`); }
+    return { image: data.results[0].url, source: data.results[0].source_url };
 }
 
 function createCommand(name: string, type: string, description: string) {
@@ -41,7 +33,6 @@ function createCommand(name: string, type: string, description: string) {
 const commands = [
     createCommand("neko", "neko", "Send random cute neko image."),
     createCommand("kitsune", "kitsune", "Send random cute kitsune image."),
-    createCommand("shiba", "shiba", "Send random cute shiba image."),
     createCommand("waifu", "waifu", "Send random waifu image."),
     createCommand("husbando", "husbando", "Send random husbando image.")
 ];
