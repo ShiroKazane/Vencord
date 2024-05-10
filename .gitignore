@@ -19,6 +19,7 @@ lerna-debug.log*
 *.tsbuildinfo
 
 src/plugins/messageLogger
+src/userplugins/RandomNSFW
 
 ExtensionCache/
 settings/
