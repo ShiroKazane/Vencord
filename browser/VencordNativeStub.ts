@@ -19,8 +19,13 @@
 /// <reference path="../src/modules.d.ts" />
 /// <reference path="../src/globals.d.ts" />
 
+<<<<<<< HEAD
 import monacoHtmlCdn from "~fileContent/../src/main/monacoWin.html";
 import monacoHtmlLocal from "~fileContent/monacoWin.html";
+=======
+import monacoHtmlLocal from "file://monacoWin.html?minify";
+import monacoHtmlCdn from "file://../src/main/monacoWin.html?minify";
+>>>>>>> 3d46f190253df5c93a4d3cfb070fb26230a89fb9
 import * as DataStore from "../src/api/DataStore";
 import { getThemeInfo } from "../src/main/themes";
 import { debounce } from "../src/utils";
