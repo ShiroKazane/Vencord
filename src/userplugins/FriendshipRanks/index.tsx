@@ -111,9 +111,9 @@ function getBadgesToApply() {
                     }
                 },
                 shouldShow: (info: BadgeUserArgs) => {
-                    if (!RelationshipStore.isFriend(info.user.id)) { return false; }
+                    if (!RelationshipStore.isFriend(info.userId)) { return false; }
 
-                    let days = daysSince(RelationshipStore.getSince(info.user.id));
+                    let days = daysSince(RelationshipStore.getSince(info.userId));
 
                     if (self[index + 1] == null) {
                         return days > rank.requirement;
